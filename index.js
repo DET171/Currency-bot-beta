@@ -3,7 +3,7 @@ require('dotenv').config();
 const bot = new Eris(process.env.TOKEN);
 const fs = require('fs');
 const prefix = process.env.PREFIX;
-const db = require('quick.db')
+const db = require('quick.db');
 
 bot.commands = new Eris.Collection();
 bot.cooldowns = new Eris.Collection();
@@ -27,9 +27,9 @@ bot.on('messageCreate', async (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
-  if (!db.has(message.author.id) && commandName != 'create') {
-    return message.channel.createMessage(`${message.author.mention}, you don't have an account yet! Run \`${prefix}create\` to create one!`)
-  }
+	if (!db.has(message.author.id) && commandName != 'create') {
+		return message.channel.createMessage(`${message.author.mention}, you don't have an account yet! Run \`${prefix}create\` to create one!`);
+	}
 	if(commandName === 'foo') {
 		bot.createMessage(message.channel.id, 'Bar!');
 	}
@@ -64,7 +64,7 @@ bot.on('messageCreate', async (message) => {
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return bot.createMessage(message.channel.id, `${message.author}, please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			return bot.createMessage(message.channel.id, `${message.author.mention}, please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
 		}
 	}
 
@@ -72,7 +72,7 @@ bot.on('messageCreate', async (message) => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-		command.execute(message, args, bot);
+		command.execute(message, args, bot, prefix);
 	}
 	catch (error) {
 		console.error(error);
