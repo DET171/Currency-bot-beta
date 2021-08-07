@@ -5,7 +5,7 @@ module.exports = {
 	name: 'buy',
 	description: 'buy something',
 	args: true,
-	usage: 'buy <item>',
+	usage: '<item>',
 	execute(message, args) {
 		console.log(shop);
 	},
