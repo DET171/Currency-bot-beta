@@ -20,7 +20,6 @@ module.exports = {
 
 		const itemCurAmt = db.get(`${message.author.id}.inv.${json[0].ID}`) || 0;
 		const inv = db.get(`${message.author.id}.inv`); // eslint-disable-line
-		console.log(itemCurAmt);
 		if(itemCurAmt < amt) {
 			return message.channel.createMessage(`Hey ${message.author.mention}, you don't even have ${amt} ${json[0].ID}`);
 		}
