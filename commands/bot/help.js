@@ -5,17 +5,17 @@ module.exports = {
 	usage: 'command ?<name>',
 	cooldown: 0,
 	async execute(message, args, client, prefix) {
-    const bot = message.channel.client;
-    const dmchannel = await bot.getDMChannel(message.author.id);
+		const bot = message.channel.client;
+		const dmchannel = await bot.getDMChannel(message.author.id);
 		const data = [];
 		const { commands } = message.channel.client;
 		if (!args.length) {
 			data.push('Here\'s a list of all my commands:');
-	    data.push(commands.map(command => command.name).join(', '));
-	    data.push(`\nYou can send \`${prefix}help <command name>\` to get info on a specific command!`);
-	    return dmchannel.createMessage(data.join('\n'))
-		    .then((msg) => {
-			    if (!msg.channel.type === 'dm') return;
+			data.push(commands.map(command => command.name).join(', '));
+			data.push(`\nYou can send \`${prefix}help <command name>\` to get info on a specific command!`);
+			return dmchannel.createMessage(data.join('\n'))
+				.then((msg) => {
+					if (!msg.channel.type === 'dm') return;
 					message.channel.createMessage(message.author.mention + ', I\'ve sent you a DM with all my commands!');
 				})
 				.catch(error => {

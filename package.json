@@ -7,9 +7,9 @@
     "dotenv": "^10.0.0",
     "eris": "0.15.1",
     "fs": "^0.0.1-security",
-    "fuzzy-search": "^3.2.1",
+    "fuzzy-search": "3.2.1",
     "got": "^11.8.2",
-    "quick.db": "^7.1.3"
+    "quick.db": "7.1.3"
   },
   "name": "currency-bot",
   "version": "0.9.8",
