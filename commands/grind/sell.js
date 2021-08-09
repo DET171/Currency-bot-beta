@@ -9,7 +9,7 @@ module.exports = {
 	args: true,
 	cooldown: 2,
 	execute(message, args) {
-		// const amt = parseInt(args[1]);
+		const amt = parseInt(args[1]) || 1;
 		const shoop = shop.all();
 		const searcher = new FuzzySearch(shoop, ['ID']);
 		const result = searcher.search(args[0]);
@@ -19,10 +19,16 @@ module.exports = {
 		}
 		console.log(json[0].ID);
 		const inv = db.get(`${message.author.id}.inv`);
+
 		if(!inv.hasOwnProperty(json[0].ID)) { // eslint-disable-line
 			return message.channel.createMessage('Yo you don\'t even own that item');
 		}
+
 		db.subtract(`${message.author.id}.inv.${json[0].ID}`, 1);
+		const itemAmt = db.get(`${message.author.id}.inv.${json[0].ID}`);
+		if(itemAmt <= 0) {
+			db.delete(`${message.author.id}.inv.${json[0].ID}`);
+		}
 		const itemCost = shop.get(`${json[0].ID}.cost`);
 		const rawAmt = itemCost * 0.6;
 		const refinedAmt = rawAmt.toFixed(0);
