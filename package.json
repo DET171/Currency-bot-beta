@@ -18,7 +18,8 @@
     "test": "start",
     "start": "node .",
     "dev": "nodemon index.js",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
