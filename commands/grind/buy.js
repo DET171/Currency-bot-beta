@@ -14,6 +14,9 @@ module.exports = {
 		const searcher = new FuzzySearch(shoop, ['ID']);
 		try {
 			const result = searcher.search(item);
+			if(result[0].data.type == 'unbuyable') {
+				return message.channel.createMessage(`${message.author.mention}, you cannot buy \`unbuyables\`!`);
+			}
 			const res = parseInt(result[0].data.cost);
 			if(db.get(`${message.author.id}.bal`) < res * amt) return message.channel.createMessage('Hey you don\'t even have enough money LMAO');
 			db.subtract(`${message.author.id}.bal`, res * amt);

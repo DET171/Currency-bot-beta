@@ -23,15 +23,15 @@ module.exports = {
 		if(itemCurAmt < amt) {
 			return message.channel.createMessage(`Hey ${message.author.mention}, you don't even have ${amt} ${json[0].ID}`);
 		}
-
-		db.subtract(`${message.author.id}.inv.${json[0].ID}`, 1);
+		// yeah this was hard to write and so will be hard to read for you
+		db.subtract(`${message.author.id}.inv.${json[0].ID}`, amt);
 		const itemAmt = db.get(`${message.author.id}.inv.${json[0].ID}`);
 		if(itemAmt <= 0) {
 			db.delete(`${message.author.id}.inv.${json[0].ID}`);
 		}
 		const itemCost = shop.get(`${json[0].ID}.cost`);
 		const rawAmt = itemCost * 0.6;
-		const refinedAmt = rawAmt.toFixed(0);
+		const refinedAmt = rawAmt.toFixed(0) * amt;
 		db.add(`${message.author.id}.bal`, refinedAmt);
 		message.channel.createMessage(`${message.author.mention}, you successfully sold ${json[0].ID} for $${refinedAmt}.`);
 	},
